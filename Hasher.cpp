@@ -20,8 +20,6 @@
 #include <math.h>
 using namespace std;
 
-double calculate_entropy(bool lower_alpha, bool upper_alpha, bool numbers, bool special, int length);
-
 int main(){
 
     // Licence info on program start
@@ -31,18 +29,27 @@ int main(){
     cout << "This is free software, and you are welcome to redistribute it\n";
     cout << "under certain conditions.\n\n";
 
-    string input = "Aabcdez";
+    string input = "AabcdezsKNALNVAUEWPHFJ04J9jdsjihfd";
+
+    while ((input.length() % 8) != 0){
+        input += "1";
+    }
+
+    cout << input << endl << endl;
 
     unsigned long long state = 18446744073709551615;
-    cout << hex << state << endl;
+    cout << hex << state << endl << endl;
 
-    for(int i = 0; i<input.length(); i++) {
+    for(int i = 0; i<input.length(); i += 8) {
         cout << input[i] << endl;
-        unsigned long long byte = int(input[i]);
-        unsigned long long update = pow(byte, 9);
-        update ^= byte;
+
+        unsigned long long update = int(input[i]);
+        for(int j = 1; j < 8; j++){
+            update = update << 8;
+            update += int(input[i+j]);
+        }
         state = state ^ update;
-        cout << hex << state << endl;
+        cout << hex << state << endl << endl;
     }
 
     return 0;
