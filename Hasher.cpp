@@ -30,7 +30,6 @@ int main(){
     cout << "under certain conditions.\n\n";
 
     string input = "";
-
     string salt = "";
 
     while (true) {
@@ -41,7 +40,7 @@ int main(){
         cout << "\nPlease enter the salt here:\n";
         getline(cin, salt);
 
-        if ((input != "") && (salt != "")){
+        if ((input != "") || (salt != "")){
             cout << "\nThe message digest (hash) is:\n";
             cout << hash_function(input, salt) << endl << endl;
         } else {
