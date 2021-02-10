@@ -17,7 +17,7 @@
 */
 
 #include <iostream>
-#include <math.h>
+#include <iomanip>
 using namespace std;
 
 int main(){
@@ -31,9 +31,13 @@ int main(){
 
     string input = "AabcdezsKNALNVAUEWPHFJ04J9jdsjihfd";
 
-    while ((input.length() % 8) != 0){
-        input += "1";
+    string salt = "safi43t043jrc3r3f";
+
+    while (((input.length() + salt.length()) % 8) != 0){
+        input += "_";
     }
+
+    input += salt;
 
     cout << input << endl << endl;
 
@@ -49,8 +53,15 @@ int main(){
             update += int(input[i+j]);
         }
         state = state ^ update;
-        cout << hex << state << endl << endl;
+        cout << state << endl << endl;
     }
+
+    cout << to_string(state) << endl;
+
+    stringstream stream;
+    stream << std::hex << state;
+    string result( stream.str() );
+    cout << result << endl;
 
     return 0;
 }
