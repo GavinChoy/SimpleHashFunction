@@ -17,7 +17,7 @@
 */
 
 #include <iostream>
-#include <iomanip>
+#include "Hash_function.hpp"
 using namespace std;
 
 int main(){
@@ -29,39 +29,25 @@ int main(){
     cout << "This is free software, and you are welcome to redistribute it\n";
     cout << "under certain conditions.\n\n";
 
-    string input = "AabcdezsKNALNVAUEWPHFJ04J9jdsjihfd";
+    string input = "";
 
-    string salt = "safi43t043jrc3r3f";
+    string salt = "";
 
-    while (((input.length() + salt.length()) % 8) != 0){
-        input += "_";
-    }
+    while (true) {
+        cout << "----------------------------------------\n";
+        cout << "Please enter the message and the salt.\nPlease leave both blank to terminate the program.\n";
+        cout << "\nPlease enter the message here:\n";
+        getline(cin, input);
+        cout << "\nPlease enter the salt here:\n";
+        getline(cin, salt);
 
-    input += salt;
-
-    cout << input << endl << endl;
-
-    unsigned long long state = 18446744073709551615;
-    cout << hex << state << endl << endl;
-
-    for(int i = 0; i<input.length(); i += 8) {
-        cout << input[i] << endl;
-
-        unsigned long long update = int(input[i]);
-        for(int j = 1; j < 8; j++){
-            update = update << 8;
-            update += int(input[i+j]);
+        if ((input != "") && (salt != "")){
+            cout << "\nThe message digest (hash) is:\n";
+            cout << hash_function(input, salt) << endl << endl;
+        } else {
+            break;
         }
-        state = state ^ update;
-        cout << state << endl << endl;
-    }
-
-    cout << to_string(state) << endl;
-
-    stringstream stream;
-    stream << std::hex << state;
-    string result( stream.str() );
-    cout << result << endl;
+    };
 
     return 0;
 }
