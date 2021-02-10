@@ -56,11 +56,11 @@ string hash_function(string input, string salt){
 
     // Produce a hexadecimal message digest
     stringstream stream;
-    stream << std::hex << state;
-    string result( stream.str() );
+    stream << hex << state;
+    string result(stream.str());
 
     // Ensure the message digest is 64-bit (8-byte)
-    while (result.length() != 16){
+    while (result.length() < 16){
         result = "0" + result;
     }
 
